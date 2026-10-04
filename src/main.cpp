@@ -1,0 +1,8 @@
+#include "sentinel/engine.hpp"
+#include <filesystem>
+#include <iostream>
+#include <string>
+#include <thread>
+
+using namespace sentinel;
+int main(int argc,char**argv){try{std::filesystem::path input,output="filtered.pcap",rules_path="config/rules.conf",json="report.json",csv="flows.csv";size_t workers=std::max(1u,std::thread::hardware_concurrency());bool anonymize=true;for(int i=1;i<argc;i++){std::string a=argv[i];auto value=[&](){if(i+1>=argc)throw std::runtime_error("Missing value after "+a);return std::string(argv[++i]);};if(a=="--input"||a=="-i")input=value();else if(a=="--output"||a=="-o")output=value();else if(a=="--rules")rules_path=value();else if(a=="--json")json=value();else if(a=="--csv")csv=value();else if(a=="--threads")workers=std::stoul(value());else if(a=="--show-ips")anonymize=false;else if(a=="--help"){std::cout<<"SentinelDPI - offline PCAP inspection\n  --input FILE --output FILE --rules FILE --threads N --json FILE --csv FILE [--show-ips]\n";return 0;}else throw std::runtime_error("Unknown argument: "+a);}if(input.empty())throw std::runtime_error("--input is required. Use --help for usage.");RuleEngine rules;rules.load(rules_path);DpiEngine engine(std::move(rules),{workers,anonymize});auto s=engine.process(input,output);engine.write_json_report(json);engine.write_csv_report(csv);std::cout<<"\nSENTINEL DPI REPORT\n-------------------\nPackets:   "<<s.total<<"\nParsed:    "<<s.parsed<<"\nForwarded: "<<s.forwarded<<"\nDropped:   "<<s.dropped<<"\nFlows:     "<<engine.flows().size()<<"\nWorkers:   "<<workers<<"\nElapsed:   "<<s.elapsed_ms<<" ms\n\nReports: "<<json<<", "<<csv<<"\nFiltered capture: "<<output<<"\n";return 0;}catch(const std::exception&e){std::cerr<<"SentinelDPI error: "<<e.what()<<'\n';return 1;}}
