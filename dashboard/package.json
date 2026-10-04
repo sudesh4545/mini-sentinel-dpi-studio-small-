@@ -1,0 +1,17 @@
+{
+  "name": "sentinel-dpi-dashboard",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node server.mjs"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "openai": "^6.3.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
