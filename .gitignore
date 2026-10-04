@@ -1,0 +1,10 @@
+/build/
+*.pcap
+report.json
+flows.csv
+filtered.pcap
+node_modules/
+.env
+dashboard/.env
+node_modules/
+dashboard/node_modules/
