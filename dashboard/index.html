@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>SentinelDPI Report Studio</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="grid"></div>
+    <header>
+      <div class="brand">
+        <b>SD</b
+        ><span
+          >SENTINEL<span>DPI</span
+          ><small>OFFLINE PACKET INTELLIGENCE</small></span
+        >
+      </div>
+      <div style="display: flex; gap: 9px">
+        <button class="upload" id="demo">LOAD DEMO</button
+        ><label class="upload"
+          >LOAD REPORT<input
+            id="file"
+            type="file"
+            accept="application/json,.json"
+        /></label>
+      </div>
+    </header>
+    <main>
+      <section class="hero">
+        <div>
+          <p class="kicker">PRIVATE · OFFLINE · EXPLAINABLE</p>
+          <h1>See the traffic.<br /><em>Understand the decision.</em></h1>
+          <p>
+            Drop a SentinelDPI JSON report to explore flows, application signals
+            and rule decisions without uploading packet data anywhere.
+          </p>
+        </div>
+        <div class="health">
+          <i></i><b id="state">Waiting for report</b
+          ><span id="privacy">No data leaves this browser</span>
+        </div>
+      </section>
+      <section class="metrics">
+        <article><span>TOTAL PACKETS</span><b id="total">—</b></article>
+        <article><span>FORWARDED</span><b id="forwarded">—</b></article>
+        <article><span>DROPPED</span><b id="dropped">—</b></article>
+        <article><span>UNIQUE FLOWS</span><b id="flowCount">—</b></article>
+      </section>
+      <section class="layout">
+        <article class="panel">
+          <div class="head">
+            <div>
+              <p class="kicker">APPLICATION MIX</p>
+              <h2>Traffic classification</h2>
+            </div>
+          </div>
+          <div id="apps" class="bars">
+            <p class="empty">Load <code>report.json</code> to begin.</p>
+          </div>
+        </article>
+        <article class="panel">
+          <div class="head">
+            <div>
+              <p class="kicker">RULE OUTCOME</p>
+              <h2>Allow vs drop</h2>
+            </div>
+          </div>
+          <div class="donut" id="donut"><b>—</b><span>drop rate</span></div>
+          <div id="legend" class="legend"></div>
+        </article>
+      </section>
+      <section class="panel flows">
+        <div class="head">
+          <div>
+            <p class="kicker">CONNECTION TABLE</p>
+            <h2>Inspected flows</h2>
+          </div>
+          <input id="search" placeholder="Filter host, app or verdict…" />
+        </div>
+        <div class="table">
+          <table>
+            <thead>
+              <tr>
+                <th>Application</th>
+                <th>Host</th>
+                <th>Packets</th>
+                <th>Bytes</th>
+                <th>Verdict</th>
+                <th>Reason</th>
+              </tr>
+            </thead>
+            <tbody id="rows">
+              <tr>
+                <td colspan="6">No report loaded.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="panel axiom">
+        <div class="head">
+          <div>
+            <p class="kicker">AXIOM AI · SECURITY COPILOT</p>
+            <h2>Ask your packet report</h2>
+          </div>
+          <span id="axiomMode" class="ai-status">CHECKING…</span>
+        </div>
+        <div id="axiomMessages" class="ai-messages" aria-live="polite">
+          <div class="ai-message assistant">
+            Load a report, then ask me to explain dropped traffic, suspicious flows, application usage, or suggest a safe rule.
+          </div>
+        </div>
+        <form id="axiomForm" class="ai-compose">
+          <input id="axiomInput" maxlength="600" autocomplete="off" placeholder="Why was this traffic dropped?" />
+          <button type="submit">ASK AXIOM</button>
+        </form>
+        <div class="ai-prompts">
+          <button data-prompt="Summarize this report and highlight the most important finding.">SUMMARIZE</button>
+          <button data-prompt="Explain all dropped flows in simple language.">EXPLAIN DROPS</button>
+          <button data-prompt="Suggest safe filtering rules based on this report. Do not block essential traffic.">SUGGEST RULES</button>
+        </div>
+        <p class="ai-note">Only summarized flow metadata is sent when online AI mode is enabled. Raw PCAP and packet payloads are never sent.</p>
+      </section>
+    </main>
+    <footer>
+      <b>[SM]</b>
+      <div>
+        <strong>Built by Sudesh Mehar</strong>
+        <p>Defensive network visibility with privacy-first defaults.</p>
+      </div>
+      <nav>
+        <a href="https://github.com/sudesh4545">GitHub</a
+        ><a href="mailto:sudeshmehar3@gmail.com">Email</a
+        ><a href="https://sudesh4545.github.io/sudesh-portfolio/">Portfolio</a>
+      </nav>
+    </footer>
+    <script src="app.js"></script>
+  </body>
+</html>
